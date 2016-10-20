@@ -1,5 +1,5 @@
 # octopaul
-A tool to help better price prediction of various commodities, flights and hotels
+A tool for improved price prediction of various commodities, flights and hotels
 
 INSTALLATION:
 
