@@ -1,8 +1,10 @@
 from pymongo import MongoClient
-import pprint
-
+import os.path
 
 client = MongoClient()
+db = client.octopaul
+
+min_epoch_time = 1420076973 #Jan 1st,2015 
 
 categories = ["AmazonInstantVideo",
         "AppsForAndroid",
@@ -26,9 +28,6 @@ categories = ["AmazonInstantVideo",
         "ToysAndGames",
         "VideoGames"
 ]
-
-min_epoch_time = 1420076973 #Jan 1st,2015 
-db = client.octopaul
 
 
 def extract_asin(collection_name):
@@ -54,7 +53,7 @@ def extract_asin(collection_name):
         asin_dict[key] = asin_dict.get(key,0) + 1
  
     filename = collection_name + "ASIN.dat"     
-    f = open(filename,'w')
+    f = open(os.path.join('../dat',filename),'w')
     count = 0
     for asin in sorted(asin_dict,key=asin_dict.get, reverse=True):
         f.write(asin)
