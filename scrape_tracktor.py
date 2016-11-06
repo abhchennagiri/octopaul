@@ -1,4 +1,4 @@
-# Extracting historical data from "thetracktor.com" and saving the historical price of each product as a seperate json
+# Extracting historical data from "thetracktor.com" and "unimerc.com" and saving the historical price of each product as a seperate json
 
 import urllib2
 from bs4 import BeautifulSoup
