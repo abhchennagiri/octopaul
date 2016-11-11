@@ -1,5 +1,5 @@
 # octopaul
-A tool for improved price prediction of various commodities, flights and hotels
+A tool for price prediction of various products on Amazon by studying price variations over time.
 
 INSTALLATION:
 
