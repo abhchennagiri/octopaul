@@ -47,6 +47,10 @@ class Octopaul(object):
         if "prices" not in response_json:
             return
         response_json = response_json["prices"]
+<<<<<<< 788048ee18bd9461b91aa286583543cec3c3111e
+=======
+        print response_json
+>>>>>>> Modifications for MAE.
         for key in response_json.keys():
             resp_dict[key] = response_json[key][0]
 
@@ -131,6 +135,7 @@ class Octopaul(object):
                 return 0
 
     def get_price_history(self):
+<<<<<<< 788048ee18bd9461b91aa286583543cec3c3111e
         
         for c in categories:
             file_name = c + "ASIN.dat"
@@ -148,6 +153,23 @@ class Octopaul(object):
 	        self.write_to_file(asin_list[i], resp_dict, c)
                 resp_dict.clear()
         
+=======
+        file = open('sampleASIN.txt','r')
+        asin_list = file.read().splitlines()
+
+        # Getting JSON data of 10 products currently
+        num_products = 1
+        resp_dict = {}
+        asin_list[0] = 'B004SBQGHS'
+        for i in xrange(num_products):
+            response_json = self.get_tractor_data(asin_list[i])
+            self.extract_tractor_info(response_json, resp_dict)
+            print resp_dict
+            response_json = self.get_unimerc_data(asin_list[i])
+            self.extract_unimerc_info(response_json, resp_dict)
+            self.write_to_file(asin_list[i], resp_dict)
+
+>>>>>>> Modifications for MAE.
 
 o = Octopaul()
 o.get_price_history()
