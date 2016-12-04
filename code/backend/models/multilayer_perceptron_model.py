@@ -53,7 +53,7 @@ class MultilayerPerceptronModel():
             a = dataset[i:(i+look_back), 0]
             dataX.append(a)
             dataY.append(dataset[i + look_back, 0])
-        return numpy.array(dataX), numpy.array(dataY)
+        return np.array(dataX), np.array(dataY)
 
 ############################# Model application and results functions #############################
 
@@ -63,8 +63,8 @@ class MultilayerPerceptronModel():
         of this function call.'''
 
         train, test = self.splitDataInotTrainAndTest(dataset)
-        trainX, trainY = createDataset(train)
-        testX, testY = createDataset(test)
+        trainX, trainY = self.createDataset(train)
+        testX, testY = self.createDataset(test)
         
         model = Sequential()
         model.add(Dense(self.neuron_size, input_dim=self.look_back, activation='relu'))
@@ -75,10 +75,10 @@ class MultilayerPerceptronModel():
         # make predictions
         trainPredict = model.predict(trainX, batch_size=10)
         testPredict = model.predict(testX, batch_size=10)
-        return trainPredict, testPredict
+        return trainPredict, testPredict, trainY, testY
 
 
-    def computeError(self, trainPredict, testPredict):
+    def computeError(self, trainPredict, testPredict, trainY, testY):
         '''Compute the mean absolute error for predicted values of both training and testing set.'''
 
         trainScore = mean_absolute_error(trainY, trainPredict)
@@ -90,13 +90,13 @@ class MultilayerPerceptronModel():
         '''Plot the graph of original data vs predicted data for train and test.'''
 
         # shift train predictions for plotting
-        trainPredictPlot = numpy.empty_like(dataset)
-        trainPredictPlot[:, :] = numpy.nan
+        trainPredictPlot = np.empty_like(dataset)
+        trainPredictPlot[:, :] = np.nan
         trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict
         
         # shift test predictions for plotting
-        testPredictPlot = numpy.empty_like(dataset)
-        testPredictPlot[:, :] = numpy.nan
+        testPredictPlot = np.empty_like(dataset)
+        testPredictPlot[:, :] = np.nan
         testPredictPlot[len(trainPredict)+(look_back*2)+1:len(dataset)-1, :] = testPredict
 
         # plot baseline and predictions
@@ -118,7 +118,7 @@ class MultilayerPerceptronModel():
                 dataX.append(tmp1)
                 tmp2 = dataset[i + look_back] 
                 dataY.append(tmp2)
-            return numpy.array(dataX), numpy.array(dataY)
+            return np.array(dataX), np.array(dataY)
 
         _, test = self.splitDataInotTrainAndTest(dataset)
         for i in xrange(futurePoints):
@@ -130,13 +130,13 @@ class MultilayerPerceptronModel():
 
 
 ############################# Main function that is called from outside. #################
-    def applyRNNmodel(self, fileName):
+    def applyMLPmodel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error of predicted prices.'''
 
         dataset = self.readFile(fileName)
-        trainPredict, testPredict = self.applyModel(dataset)
-        _, mae = self.computeError(trainPredict, testPredict)
+        trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
+        _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
         if plotting:
             self.plotGraph(dataset, trainPredict, testPredict)
         if predictFuture:
