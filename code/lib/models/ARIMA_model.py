@@ -24,7 +24,7 @@ class ARIMAModel:
         return data
     
 
-    def stationarizeData(data):
+    def stationarizeData(self, data):
         
         ts = data['Price']
         ts_log = np.log(ts)
@@ -97,8 +97,8 @@ class ARIMAModel:
     def predictPrice(self, p, q, fileName):
         mae, predictions_ARIMA = None, None
         try:
-            data = readFile(fileName)
-            ts,ts_log,ts_log_diff = stationarizeData(data)
+            data = self.readFile(fileName)
+            ts,ts_log,ts_log_diff = self.stationarizeData(data)
             model = ARIMA(ts_log, order=(p,1,q))  
             results_ARIMA = model.fit(disp=-1)
             predictions_ARIMA_diff = pd.Series(results_ARIMA.fittedvalues, copy=True)
@@ -111,6 +111,7 @@ class ARIMAModel:
             mae = mean_absolute_error(ts, predictions_ARIMA)
 
         except:
+            #print 'In the except'
             pass
         return mae, predictions_ARIMA
 
@@ -122,12 +123,12 @@ class ARIMAModel:
         minMae = 9999
         for i in xrange(1,6):
             for j in xrange(1,5):
-                mae, predictions_ARIMA = predictPrice(i, j, fileName)
+                mae, predictions_ARIMA = self.predictPrice(i, j, fileName)
                 if mae and not predictions_ARIMA.empty and mae < minMae:
                     minMae = mae
                     p, q = i, j
                     best_predictions_ARIMA = predictions_ARIMA
-        return minMae, best_predictions_ARIMA
+        return minMae
 
 
 
