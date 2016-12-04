@@ -49,14 +49,15 @@ output_file.write("Product,Mean,mlpErr,rnnErr\n")
 #pass second arg as the path of data files.
 path = sys.argv[2]
 for file in os.listdir(path):
+    filename = file
     file = path + "/" + file
     if os.path.isfile(file):
         if file.endswith(".full"):
 
-            index = string.find(file, ".")
-            filename = file[0:index]
-
-            output_file.write(filename)
+            index = string.find(filename, ".")
+            #Get product id from filename
+            productId = filename[0:index]
+            output_file.write(productId)
             output_file.write(",")
             output_file.write(repr(calulateMean(file)))
 
