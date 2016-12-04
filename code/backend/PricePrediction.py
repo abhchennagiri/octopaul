@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, './models')
+sys.path.insert(0, '../lib/models')
 from RNN_model import RNNModel
 from multilayer_perceptron_model import MultilayerPerceptronModel
 
