@@ -5,7 +5,7 @@ from matplotlib.pylab import rcParams
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.tsa.arima_model import ARIMA
-
+  
 
 rcParams['figure.figsize'] = 15, 6
 
@@ -43,22 +43,16 @@ print data.head()
 
 ts = data['Price']
 ts.head(10)
-print ts
-plt.plot(ts, color='red', label='Original')
-#plt.show()
 ts_log = np.log(ts)
-plt.plot(ts_log, label='Logged Data')
-moving_avg = pd.rolling_mean(ts,12)
-plt.plot(moving_avg, color='green', label='Rolling Mean')
-plt.legend(loc='best')
-plt.show()
 
-
-
+'''We compute diff to make the data closer to leaniarity.'''
 ts_log_diff = ts_log - ts_log.shift()
+
+'''Remove null values in place'''
 ts_log_diff.dropna(inplace=True)
 
-lag_acf = acf(ts_log_diff, nlags=20)
+'''ACF is applied to compute MA value; '''
+lag_acf = acf(ts_log_diff, nlags=40)
 plt.subplot(121) 
 plt.plot(lag_acf)
 plt.axhline(y=0,linestyle='--',color='gray')
@@ -67,7 +61,7 @@ plt.axhline(y=1.96/np.sqrt(len(ts_log_diff)),linestyle='--',color='gray')
 plt.title('Autocorrelation Function')
 plt.show()
 
-lag_pacf = pacf(ts_log_diff, nlags=20, method='ols')
+lag_pacf = pacf(ts_log_diff, nlags=40, method='ols')
 plt.subplot(122)
 plt.plot(lag_pacf)
 plt.axhline(y=0,linestyle='--',color='gray')
@@ -78,12 +72,13 @@ plt.tight_layout()
 plt.show()
 
 
-model = ARIMA(ts_log, order=(1, 1, 1))  
-results_ARIMA = model.fit(disp=-1)  
+model = ARIMA(ts_log, order=(1,1,1))  
+results_ARIMA = model.fit(disp=-1) 
+print results_ARIMA
 plt.plot(ts_log_diff)
 plt.plot(results_ARIMA.fittedvalues, color='red')
 plt.title('RSS: %.4f'% sum((results_ARIMA.fittedvalues-ts_log_diff)**2))
-plt.show()
+#plt.show()
 
 predictions_ARIMA_diff = pd.Series(results_ARIMA.fittedvalues, copy=True)
 predictions_ARIMA_diff_cumsum = predictions_ARIMA_diff.cumsum()
@@ -95,4 +90,4 @@ predictions_ARIMA = np.exp(predictions_ARIMA_log)
 plt.plot(ts, color='blue')
 plt.plot(predictions_ARIMA, color='green')
 plt.title('RMSE: %.4f'% np.sqrt(sum((predictions_ARIMA-ts)**2)/len(ts)))
-plt.show()
+#plt.show()
