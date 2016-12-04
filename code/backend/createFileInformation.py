@@ -7,7 +7,7 @@
 import os
 import string
 import sys
-
+from PricePrediction import PricePrediction
 
 def calulateMean(filename):
     mean = 0.0
@@ -30,34 +30,29 @@ def calulateMean(filename):
     return mean
 
 
-def callModel1():
-    return
-
-
-def callModel2():
-    return
-
-
-def callModel3():
-    return
-
-
-def callModel4():
-    return
+def applyPredictionModels(filename):
+    predictionObj = PricePrediction()
+    mlpErr, rnnErr = predictionObj.applyPredictionModels(filename)
+    print mlpErr, rnnErr
+    return mlpErr, rnnErr
 
 
 # START
-if len(sys.argv) != 2:
+if len(sys.argv) < 2:
     print "You need to have the group name in the parameter"
     exit(0)
 
 # Get the groupname form the parameters
 output_file = open(sys.argv[1] + ".info", "w");
-output_file.write("Product,Mean\n")
+output_file.write("Product,Mean,mlpErr,rnnErr\n")
 
-for file in os.listdir('.'):
+#pass second arg as the path of data files.
+path = sys.argv[2]
+for file in os.listdir(path):
+    file = path + "/" + file
     if os.path.isfile(file):
         if file.endswith(".full"):
+
             index = string.find(file, ".")
             filename = file[0:index]
 
@@ -65,19 +60,12 @@ for file in os.listdir('.'):
             output_file.write(",")
             output_file.write(repr(calulateMean(file)))
 
-            # model 1
-
-            # output_file.write(",")
-            # model 2
-
-            # output_file.write(",")
-            # model 3
-
-            # output_file.write(",")
-            # model 4
-
-
-
+            # Apply prediction models and write the errors to file
+            mlpErr, rnnErr = applyPredictionModels(file)
+            output_file.write(",")
+            output_file.write(str(mlpErr))
+            output_file.write(",")
+            output_file.write(str(rnnErr))
 
             output_file.write("\n")
             continue
