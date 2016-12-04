@@ -15,7 +15,10 @@ class Octopaul(object):
         response_json = json.loads(response_json)
         if "prices" not in response_json:
             return
-        return response_json["prices"]
+        response_json = response_json["prices"]
+        print response_json
+        for key in response_json.keys():
+            resp_dict[key] = response_json[key][0]
 
     def extract_unimerc_info(self, response_json, resp_dict):
     	response_json = json.loads(response_json)
@@ -96,14 +99,16 @@ class Octopaul(object):
         asin_list = file.read().splitlines()
 
         # Getting JSON data of 10 products currently
-        num_products = 10
+        num_products = 1
         resp_dict = {}
+        asin_list[0] = 'B004SBQGHS'
         for i in xrange(num_products):
-	        response_json = self.get_tractor_data(asin_list[i])
-	        self.extract_tractor_info(response_json, resp_dict)
-	        response_json = self.get_unimerc_data(asin_list[i])
-	        self.extract_unimerc_info(response_json, resp_dict)
-	        self.write_to_file(asin_list[i], resp_dict)
+            response_json = self.get_tractor_data(asin_list[i])
+            self.extract_tractor_info(response_json, resp_dict)
+            print resp_dict
+            response_json = self.get_unimerc_data(asin_list[i])
+            self.extract_unimerc_info(response_json, resp_dict)
+            self.write_to_file(asin_list[i], resp_dict)
 
 
 o = Octopaul()
