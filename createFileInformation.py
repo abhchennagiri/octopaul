@@ -20,8 +20,9 @@ def calulateMean(filename):
     count = 0
     del lines[0]
     for line in lines:
-        count = count + 1
-        mean = mean + float(line[1])
+        if line[1] != "nan":
+            count = count + 1
+            mean = mean + float(line[1])
     if count != 0:
         mean = mean / count
     else:
@@ -58,7 +59,7 @@ for file in os.listdir('.'):
     if os.path.isfile(file):
         if file.endswith(".full"):
             index = string.find(file, ".")
-            filename = file[1:index]
+            filename = file[0:index]
 
             output_file.write(filename)
             output_file.write(",")
