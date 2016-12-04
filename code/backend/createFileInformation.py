@@ -33,7 +33,6 @@ def calulateMean(filename):
 def applyPredictionModels(filename):
     predictionObj = PricePrediction()
     mlpErr, rnnErr = predictionObj.applyPredictionModels(filename)
-    print mlpErr, rnnErr
     return mlpErr, rnnErr
 
 
@@ -53,7 +52,6 @@ for file in os.listdir(path):
     file = path + "/" + file
     if os.path.isfile(file):
         if file.endswith(".full"):
-
             index = string.find(filename, ".")
             #Get product id from filename
             productId = filename[0:index]
