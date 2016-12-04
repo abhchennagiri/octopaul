@@ -45,16 +45,14 @@ if len(sys.argv) < 2:
 # Get the groupname form the parameters
 output_file = open(sys.argv[1] + ".info", "w");
 output_file.write("Product,Mean,mlpErr,rnnErr\n")
-cnt = 1
+
 #pass second arg as the path of data files.
 path = sys.argv[2]
 for file in os.listdir(path):
     file = path + "/" + file
     if os.path.isfile(file):
         if file.endswith(".full"):
-            if cnt == 2:
-                break
-            cnt += 1
+
             index = string.find(file, ".")
             filename = file[0:index]
 
