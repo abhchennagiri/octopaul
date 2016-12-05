@@ -20,6 +20,8 @@ def calulateMean(filename):
     count = 0
     del lines[0]
     for line in lines:
+        if not line[1]:
+            continue
         if line[1] != "nan":
             count = count + 1
             mean = mean + float(line[1])
@@ -42,7 +44,7 @@ if len(sys.argv) < 2:
     exit(0)
 
 # Get the groupname form the parameters
-output_file = open(sys.argv[1] + ".info", "w");
+output_file = open(sys.argv[1] + ".info", "a")
 output_file.write("Product,Mean,randomWalkErr,arimaErr,mlpErr,rnnErr\n")
 
 #pass second arg as the path of data files.
