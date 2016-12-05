@@ -8,6 +8,7 @@ from keras.layers import LSTM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import csv
+from numpy import inf
 from itertools import izip
 scaler = MinMaxScaler(feature_range=(0, 1))
 
@@ -93,6 +94,12 @@ class RNNModel():
         testPredict = model.predict(testX, batch_size=10)
         return trainPredict, testPredict, trainY, testY
 
+    def convertInfNanToZero(self, array):
+        array[array == -inf] = 0
+        array[array == inf] = 0
+        array[np.isnan(array)] = 0
+        return array
+
 
     def computeError(self, trainPredict, testPredict, trainY, testY):
         '''Compute the mean absolute error for predicted values of both training and testing set.'''
@@ -102,6 +109,9 @@ class RNNModel():
         trainY = scaler.inverse_transform([trainY])
         testPredict = scaler.inverse_transform(testPredict)
         testY = scaler.inverse_transform([testY])
+
+        trainY, trainPredict = self.convertInfNanToZero(trainY), self.convertInfNanToZero(trainPredict)
+        testY, testPredict = self.convertInfNanToZero(testY), self.convertInfNanToZero(testPredict)
 
         # calculate mean_absolute_error
         trainScore = mean_absolute_error(trainY[0], trainPredict[:,0])
@@ -163,7 +173,7 @@ class RNNModel():
     def applyRNNmodel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error of predicted prices.'''
-
+        #try:
         dataset = self.readFile(fileName)
         trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
         _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
@@ -173,4 +183,6 @@ class RNNModel():
             self.predictFuturePrices(dataset, testPredict)
 
         return mae
+        # except:
+        #     pass
 

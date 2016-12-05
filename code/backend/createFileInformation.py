@@ -51,7 +51,8 @@ for file in os.listdir(path):
     filename = file
     file = path + "/" + file
     if os.path.isfile(file):
-        if file.endswith(".full"):
+        if file.endswith(".new"):
+            print filename
             index = string.find(filename, ".")
             #Get product id from filename
             productId = filename[0:index]
@@ -59,7 +60,7 @@ for file in os.listdir(path):
             output_file.write(",")
             output_file.write(repr(calulateMean(file)))
 
-            # Apply prediction models and write the errors to file
+            # # Apply prediction models and write the errors to file
             randomWalkErr, arimaErr, mlpErr, rnnErr = applyPredictionModels(file)
             output_file.write(",")
             output_file.write(str(randomWalkErr))
