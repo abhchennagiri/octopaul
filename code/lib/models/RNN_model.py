@@ -35,7 +35,7 @@ class RNNModel():
         dataframe = pd.read_csv(fileName, usecols=[1], engine='python')
         dataset = dataframe.values
         dataset = dataset.astype('float32')
-
+        dataset = self.convertInfNanToZero(dataset)
         # normalize the dataset
         dataset = scaler.fit_transform(dataset)
         return dataset
@@ -173,16 +173,16 @@ class RNNModel():
     def applyRNNmodel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error of predicted prices.'''
-        #try:
-        dataset = self.readFile(fileName)
-        trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
-        _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
-        if plotting:
-            self.plotGraph(dataset, trainPredict, testPredict)
-        if predictFuture:
-            self.predictFuturePrices(dataset, testPredict)
+        try:
+            dataset = self.readFile(fileName)
+            trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
+            _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
+            if plotting:
+                self.plotGraph(dataset, trainPredict, testPredict)
+            if predictFuture:
+                self.predictFuturePrices(dataset, testPredict)
 
-        return mae
-        # except:
-        #     pass
+            return mae
+        except:
+            pass
 
