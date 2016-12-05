@@ -33,6 +33,7 @@ class MultilayerPerceptronModel():
         dataframe = pd.read_csv(fileName, usecols=[1], engine='python')
         dataset = dataframe.values
         dataset = dataset.astype('float32')
+        dataset = self.convertInfNanToZero(dataset)
         return dataset
 
 
@@ -143,17 +144,17 @@ class MultilayerPerceptronModel():
     def applyMLPmodel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error of predicted prices.'''
-        #try:
-        dataset = self.readFile(fileName)
-        trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
-        _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
-        if plotting:
-            self.plotGraph(dataset, trainPredict, testPredict)
-        if predictFuture:
-            self.predictFuturePrices(dataset, testPredict)
-        return mae
-        # except:
-        #     pass
+        try:
+            dataset = self.readFile(fileName)
+            trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
+            _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
+            if plotting:
+                self.plotGraph(dataset, trainPredict, testPredict)
+            if predictFuture:
+                self.predictFuturePrices(dataset, testPredict)
+            return mae
+        except:
+            pass
         
 
 
