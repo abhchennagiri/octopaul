@@ -1,5 +1,6 @@
 
 import numpy as np
+from numpy import inf
 import matplotlib.pyplot as plt
 import pandas as pd
 from keras.models import Sequential
@@ -77,9 +78,18 @@ class MultilayerPerceptronModel():
         testPredict = model.predict(testX, batch_size=10)
         return trainPredict, testPredict, trainY, testY
 
+    def convertInfNanToZero(self, array):
+        array[array == -inf] = 0
+        array[array == inf] = 0
+        array[np.isnan(array)] = 0
+        return array
 
     def computeError(self, trainPredict, testPredict, trainY, testY):
         '''Compute the mean absolute error for predicted values of both training and testing set.'''
+
+        
+        trainY, trainPredict = self.convertInfNanToZero(trainY), self.convertInfNanToZero(trainPredict)
+        testY, testPredict = self.convertInfNanToZero(testY), self.convertInfNanToZero(testPredict)
 
         trainScore = mean_absolute_error(trainY, trainPredict)
         testScore = mean_absolute_error(testY, testPredict)
@@ -133,7 +143,7 @@ class MultilayerPerceptronModel():
     def applyMLPmodel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error of predicted prices.'''
-
+        #try:
         dataset = self.readFile(fileName)
         trainPredict, testPredict, trainY, testY = self.applyModel(dataset)
         _, mae = self.computeError(trainPredict, testPredict, trainY, testY)
@@ -141,8 +151,10 @@ class MultilayerPerceptronModel():
             self.plotGraph(dataset, trainPredict, testPredict)
         if predictFuture:
             self.predictFuturePrices(dataset, testPredict)
-
         return mae
+        # except:
+        #     pass
+        
 
 
 
