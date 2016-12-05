@@ -32,8 +32,8 @@ def calulateMean(filename):
 
 def applyPredictionModels(filename):
     predictionObj = PricePrediction()
-    mlpErr, rnnErr = predictionObj.applyPredictionModels(filename)
-    return mlpErr, rnnErr
+    randomWalkErr, arimaErr, mlpErr, rnnErr = predictionObj.applyPredictionModels(filename)
+    return randomWalkErr, arimaErr, mlpErr, rnnErr
 
 
 # START
@@ -43,7 +43,7 @@ if len(sys.argv) < 2:
 
 # Get the groupname form the parameters
 output_file = open(sys.argv[1] + ".info", "w");
-output_file.write("Product,Mean,mlpErr,rnnErr\n")
+output_file.write("Product,Mean,randomWalkErr,arimaErr,mlpErr,rnnErr\n")
 
 #pass second arg as the path of data files.
 path = sys.argv[2]
@@ -60,7 +60,11 @@ for file in os.listdir(path):
             output_file.write(repr(calulateMean(file)))
 
             # Apply prediction models and write the errors to file
-            mlpErr, rnnErr = applyPredictionModels(file)
+            randomWalkErr, arimaErr, mlpErr, rnnErr = applyPredictionModels(file)
+            output_file.write(",")
+            output_file.write(str(randomWalkErr))
+            output_file.write(",")
+            output_file.write(str(arimaErr))
             output_file.write(",")
             output_file.write(str(mlpErr))
             output_file.write(",")

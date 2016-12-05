@@ -7,6 +7,8 @@ from statsmodels.tsa.stattools import acf, pacf
 from statsmodels.tsa.arima_model import ARIMA
 from sklearn.metrics import mean_absolute_error
 import math
+import warnings
+warnings.filterwarnings("error")
 
 class ARIMAModel:
 
@@ -33,7 +35,7 @@ class ARIMAModel:
         '''Remove null values in place'''
         ts_log_diff.dropna(inplace=True)    
 
-        return ts,ts_log,ts_log_diff
+        return ts, ts_log, ts_log_diff
 
     def test_stationarity(timeseries):
 
@@ -98,7 +100,7 @@ class ARIMAModel:
         mae, predictions_ARIMA = None, None
         try:
             data = self.readFile(fileName)
-            ts,ts_log,ts_log_diff = self.stationarizeData(data)
+            ts, ts_log, ts_log_diff = self.stationarizeData(data)
             model = ARIMA(ts_log, order=(p,1,q))  
             results_ARIMA = model.fit(disp=-1)
             predictions_ARIMA_diff = pd.Series(results_ARIMA.fittedvalues, copy=True)
@@ -120,7 +122,7 @@ class ARIMAModel:
     def applyARIMAModel(self, fileName):
         '''This function reads data from the given file, applies model, computes
         and returns the mean absolute error , predictions and p,q terms.'''
-        minMae = 9999
+        minMae, best_predictions_ARIMA = 9999, None
         for i in xrange(1,6):
             for j in xrange(1,5):
                 mae, predictions_ARIMA = self.predictPrice(i, j, fileName)
@@ -128,7 +130,7 @@ class ARIMAModel:
                     minMae = mae
                     p, q = i, j
                     best_predictions_ARIMA = predictions_ARIMA
-        return minMae
+        return minMae, best_predictions_ARIMA
 
 
 
