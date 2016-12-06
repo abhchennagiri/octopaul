@@ -55,7 +55,7 @@ with open(path + "/" + category + ".info", 'r') as f:
 
         if len(line.strip()) == 0:
             continue
-            
+
         productId, mean, randomWalkErr, arimaErr, mlpErr, rnnErr = line.strip().split(',')
         lines.append((productId, mean, randomWalkErr, arimaErr, mlpErr, rnnErr))
         count = count + 1

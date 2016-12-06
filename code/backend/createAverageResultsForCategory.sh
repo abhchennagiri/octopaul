@@ -20,6 +20,9 @@ python createMeanErrorForCategory.py CellPhones $dataPath
 echo "ClothingShoesJewelry"
 python createMeanErrorForCategory.py ClothingShoesJewelry $dataPath
 
+echo "Electronics"
+python createMeanErrorForCategory.py Electronics $dataPath
+
 # echo "DigitalMusic"
 # python createMeanErrorForCategory.py DigitalMusic $dataPath
 
