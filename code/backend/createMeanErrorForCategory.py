@@ -26,7 +26,7 @@ def calculateMeanForError(error):
         mean = mean / count
     else:
         mean = 0
-        print "Error in calculating mean"
+        # print "Error in calculating mean"
     return mean
 
 
@@ -52,11 +52,14 @@ with open(path + "/" + category + ".info", 'r') as f:
         if count == 0:
             count = count + 1
             continue
+
+        if len(line.strip()) == 0:
+            continue
+            
         productId, mean, randomWalkErr, arimaErr, mlpErr, rnnErr = line.strip().split(',')
         lines.append((productId, mean, randomWalkErr, arimaErr, mlpErr, rnnErr))
         count = count + 1
     for i in range(1, 6):
-        print i
         output_file.write(repr(calculateMeanForError(column(lines, i))));
         if i != 5:
             output_file.write(",");
