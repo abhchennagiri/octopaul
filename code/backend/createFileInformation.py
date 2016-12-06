@@ -39,7 +39,7 @@ def applyPredictionModels(filename):
 
 
 # START
-if len(sys.argv) < 2:
+if len(sys.argv) <= 2:
     print "You need to have the group name in the parameter"
     exit(0)
 
