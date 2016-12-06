@@ -3,62 +3,62 @@
 dataPath="../../results"
 
 echo "Automotive"
-python createFileInformation.py Automotive $dataPath/Automotive
+python createMeanErrorForCategory.py Automotive $dataPath/Automotive
 
 # echo "AppsForAndroid"
-# python createFileInformation.py AppsForAndroid $dataPath/AppsForAndroid
+# python createMeanErrorForCategory.py AppsForAndroid $dataPath/AppsForAndroid
 
 echo "Baby"
-python createFileInformation.py Baby $dataPath/Baby
+python createMeanErrorForCategory.py Baby $dataPath/Baby
 
 echo "Beauty"
-python createFileInformation.py Beauty $dataPath/Beauty
+python createMeanErrorForCategory.py Beauty $dataPath/Beauty
 
 echo "CellPhones"
-python createFileInformation.py CellPhones $dataPath/CellPhones
+python createMeanErrorForCategory.py CellPhones $dataPath/CellPhones
 
 echo "ClothingShoesJewelry"
-python createFileInformation.py ClothingShoesJewelry $dataPath/ClothingShoesJewelry
+python createMeanErrorForCategory.py ClothingShoesJewelry $dataPath/ClothingShoesJewelry
 
 # echo "DigitalMusic"
-# python createFileInformation.py DigitalMusic $dataPath/DigitalMusic
+# python createMeanErrorForCategory.py DigitalMusic $dataPath/DigitalMusic
 
 # echo "GroceryGourmetFood"
-# python createFileInformation.py GroceryGourmetFood $dataPath/GroceryGourmetFood
+# python createMeanErrorForCategory.py GroceryGourmetFood $dataPath/GroceryGourmetFood
 
 echo "Health"
-python createFileInformation.py Health $dataPath/Health
+python createMeanErrorForCategory.py Health $dataPath/Health
 
 echo "HomeKitchen"
-python createFileInformation.py HomeKitchen $dataPath/HomeKitchen
+python createMeanErrorForCategory.py HomeKitchen $dataPath/HomeKitchen
 
 echo "KindleStore"
-python createFileInformation.py KindleStore $dataPath/KindleStore
+python createMeanErrorForCategory.py KindleStore $dataPath/KindleStore
 
 # echo "MoviesTV"
-# python createFileInformation.py MoviesTV $dataPath/MoviesTV
+# python createMeanErrorForCategory.py MoviesTV $dataPath/MoviesTV
 
 echo "MusicalInstruments"
-python createFileInformation.py MusicalInstruments $dataPath/MusicalInstruments
+python createMeanErrorForCategory.py MusicalInstruments $dataPath/MusicalInstruments
 
 echo "OfficeProducts"
-python createFileInformation.py OfficeProducts $dataPath/OfficeProducts
+python createMeanErrorForCategory.py OfficeProducts $dataPath/OfficeProducts
 
 echo "PatioLawnGarden"
-python createFileInformation.py PatioLawnGarden $dataPath/PatioLawnGarden
+python createMeanErrorForCategory.py PatioLawnGarden $dataPath/PatioLawnGarden
 
 echo "PetSupplies"
-python createFileInformation.py PetSupplies $dataPath/PetSupplies
+python createMeanErrorForCategory.py PetSupplies $dataPath/PetSupplies
 
 echo "SportsOutdoors"
-python createFileInformation.py SportsOutdoors $dataPath/SportsOutdoors
+python createMeanErrorForCategory.py SportsOutdoors $dataPath/SportsOutdoors
 
 echo "ToolsHomeImprovement"
-python createFileInformation.py ToolsHomeImprovement $dataPath/ToolsHomeImprovement
+python createMeanErrorForCategory.py ToolsHomeImprovement $dataPath/ToolsHomeImprovement
 
 echo "ToysAndGames"
-python createFileInformation.py ToysAndGames $dataPath/ToysAndGames
+python createMeanErrorForCategory.py ToysAndGames $dataPath/ToysAndGames
 
 # echo "VideoGames"
-# python createFileInformation.py VideoGames $dataPath/VideoGames
+# python createMeanErrorForCategory.py VideoGames $dataPath/VideoGames
 
